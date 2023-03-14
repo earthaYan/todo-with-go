@@ -40,4 +40,5 @@ func DataBase(conn string) {
 	sqlDB.SetMaxOpenConns(300)
 	sqlDB.SetConnMaxLifetime(time.Second * 30)
 	DB = db
+	migration()
 }
