@@ -72,3 +72,23 @@ func (service *ListTaskService) List(uid uint) serializer.Response {
 
 	return serializer.BuildListResponse(serializer.BuildTasks(tasks), uint(count))
 }
+
+type UpdateTaskService struct {
+	Title   string `json:"titele" form:"title"`
+	Content string `json:"content" form:"content"`
+	Status  int    `json:"status" form:"status"` //0 未完成 1已完成
+}
+
+func (service *UpdateTaskService) Update(tid string) serializer.Response {
+	var task model.Task
+	model.DB.First(&task, tid)
+	task.Content = service.Content
+	task.Title = service.Title
+	task.Status = service.Status
+	model.DB.Save(&task)
+	return serializer.Response{
+		Status: 200,
+		Data:   serializer.BuildTask(task),
+		Msg:    "更新成功",
+	}
+}

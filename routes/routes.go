@@ -26,6 +26,7 @@ func NewRouter() *gin.Engine {
 			authd.POST("task", api.CreateTask)
 			authd.GET("task/:id", api.ShowTask)
 			authd.GET("tasks", api.ListTask)
+			authd.PUT("task/:id", api.UpdateTask)
 		}
 	}
 	return router
