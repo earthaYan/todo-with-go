@@ -19,3 +19,13 @@ func CreateTask(c *gin.Context) {
 		c.JSON(400, ErrorResponse(err))
 	}
 }
+func ShowTask(c *gin.Context) {
+	var showTask service.ShowTaskService
+	if err := c.ShouldBind(&showTask); err == nil {
+		res := showTask.Show(c.Param("id"))
+		c.JSON(200, res)
+	} else {
+		logging.Error(err)
+		c.JSON(400, ErrorResponse(err))
+	}
+}

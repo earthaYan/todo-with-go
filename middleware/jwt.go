@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"time"
 	"to-do-list/pkg/utils"
 
@@ -12,6 +13,7 @@ func JWT() gin.HandlerFunc {
 		var code int
 		code = 200
 		token := c.GetHeader("Authorization")
+		fmt.Print(token, 111)
 		if token == "" {
 			code = 404
 		} else {
