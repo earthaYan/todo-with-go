@@ -56,3 +56,19 @@ func (service *ShowTaskService) Show(tid string) serializer.Response {
 		Data:   serializer.BuildTask(task),
 	}
 }
+
+type ListTaskService struct {
+	PageNum  int `json:"page_num"`
+	PageSize int `json:"page_size"`
+}
+
+func (service *ListTaskService) List(uid uint) serializer.Response {
+	var tasks []model.Task
+	var count int64 = 0
+	if service.PageSize == 0 {
+		service.PageSize = 15
+	}
+	model.DB.Model(&model.Task{}).Preload("User").Where("uid=?", uid).Count(&count).Limit(service.PageSize).Offset((service.PageNum - 1) * service.PageSize).Find(&tasks)
+
+	return serializer.BuildListResponse(serializer.BuildTasks(tasks), uint(count))
+}
