@@ -12,7 +12,7 @@ func UserRegister(c *gin.Context) {
 		res := userRegister.Register()
 		c.JSON(200, res)
 	} else {
-		c.JSON(400, err)
+		c.JSON(400, ErrorResponse(err))
 	}
 }
 func UserLogin(c *gin.Context) {
@@ -21,6 +21,6 @@ func UserLogin(c *gin.Context) {
 		res := userLogin.Login()
 		c.JSON(200, res)
 	} else {
-		c.JSON(500, err)
+		c.JSON(500, ErrorResponse(err))
 	}
 }
