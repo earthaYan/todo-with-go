@@ -109,3 +109,21 @@ func (service *SearchTaskService) Search(uid uint) serializer.Response {
 		Limit(service.PageSize).Offset((service.PageNum - 1) * service.PageSize).Find(&tasks)
 	return serializer.BuildListResponse(serializer.BuildTasks(tasks), uint(count))
 }
+
+type DeleteTaskService struct {
+}
+
+func (service *DeleteTaskService) Delete(tid string) serializer.Response {
+	var task model.Task
+	err := model.DB.Delete(&task, tid).Error
+	if err != nil {
+		return serializer.Response{
+			Status: 500,
+			Msg:    "删除失败",
+		}
+	}
+	return serializer.Response{
+		Status: 200,
+		Msg:    "删除成功",
+	}
+}

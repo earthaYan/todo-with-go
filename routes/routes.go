@@ -28,6 +28,7 @@ func NewRouter() *gin.Engine {
 			authd.GET("tasks", api.ListTask)
 			authd.PUT("task/:id", api.UpdateTask)
 			authd.POST("search", api.SearchTask)
+			authd.DELETE("task/:id", api.DeleteTask)
 		}
 	}
 	return router
