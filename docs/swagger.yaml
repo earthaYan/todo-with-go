@@ -1,0 +1,278 @@
+basePath: /api/v1
+definitions:
+  serializer.Response:
+    properties:
+      data: {}
+      error:
+        type: string
+      msg:
+        type: string
+      status:
+        type: integer
+    type: object
+  service.CreateTaskService:
+    properties:
+      content:
+        type: string
+      status:
+        description: 0 未完成 1已完成
+        type: integer
+      titele:
+        type: string
+    type: object
+  service.DeleteTaskService:
+    type: object
+  service.ListTaskService:
+    properties:
+      page_num:
+        type: integer
+      page_size:
+        type: integer
+    type: object
+  service.SearchTaskService:
+    properties:
+      info:
+        type: string
+      page_num:
+        type: integer
+      page_size:
+        type: integer
+    type: object
+  service.ShowTaskService:
+    type: object
+  service.UpdateTaskService:
+    properties:
+      content:
+        type: string
+      status:
+        description: 0 未完成 1已完成
+        type: integer
+      titele:
+        type: string
+    type: object
+  service.UserService:
+    properties:
+      password:
+        maxLength: 16
+        minLength: 5
+        type: string
+      user_name:
+        maxLength: 15
+        minLength: 3
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
+host: 116.204.108.126:3000
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Backend of Todo
+  title: TodoList API
+  version: 0.0.1
+paths:
+  /search:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: "2"
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.SearchTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 查询任务
+      tags:
+      - TASK
+  /task:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: title
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.CreateTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"status":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 创建任务
+      tags:
+      - TASK
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: "2"
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.UpdateTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 修改任务
+      tags:
+      - TASK
+  /task/:id:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户信息
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.DeleteTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 删除任务
+      tags:
+      - TASK
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: rush
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.ShowTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 展示任务详细信息
+      tags:
+      - TASK
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: rush
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.ListTaskService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: status":500,"data":{},"Msg":{},"Error":"error"}
+          schema:
+            type: json
+      summary: 获取任务列表
+      tags:
+      - TASK
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名, 密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.UserService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: '{"status":500,"data":{},"Msg":{},"Error":"error"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+      summary: 用户登录
+      tags:
+      - USER
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 用户名, 密码
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/service.UserService'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"ok"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+        "500":
+          description: '{"status":400,"data":{},"Msg":{},"Error":"error"}'
+          schema:
+            $ref: '#/definitions/serializer.Response'
+      summary: 用户注册
+      tags:
+      - USER
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
